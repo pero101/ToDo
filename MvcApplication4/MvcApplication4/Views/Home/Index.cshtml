@@ -1,0 +1,41 @@
+﻿@section header{
+    <link rel="stylesheet" href="Content/Home.css" type="text/css" media="screen" />
+    @Scripts.Render("~/Scripts/Home.js")
+}
+
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Welcome to ToDo</h1>
+                <p>Login to see your list</p>
+            </hgroup>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <section id="LoginContainer">
+            <h1>Login</h1>  
+            @using (Html.BeginForm( "Login", "Home"))
+            {
+                <label>Username</label> @Html.TextBox("username");
+                <label>Password</label> @Html.Password("password");
+                <br />
+                <input type="submit" value="Login" /> 
+            }
+        </section>
+        <section id="RegisterContainer">
+            <h1>Register</h1>
+            
+            @using (Html.BeginForm("Register", "Home"))
+            {
+                <label>Username</label>     <input type="text" id="usernameRegister" name="usernameRegister" />
+                <label>Password</label>     <input type="password" id="passwordRegister" name="passwordRegister" />
+                <label>Confirm password</label>  <input type="password" id="passwordConfirmRegister" />
+                <label>E-mail</label>  <input type="text" id="emailRegister" />
+                <input type="button" value="Register" id="btnRegister" />
+            }
+        </section>
+
+        <section class="clear"></section>
+    </section>
+</div>

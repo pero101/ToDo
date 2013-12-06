@@ -1,0 +1,24 @@
+﻿#ListContainer {
+    width:100%;
+}
+#ListAddItem {
+    width:100%;
+}
+
+    #ListAddItem select {
+        width:200px;
+        height:35px;
+    }
+
+.ToDoItem {
+    width:100%;
+    border-bottom:1px solid #0094ff;
+}
+    .ToDoItem P {
+        font-size:20px;
+    }
+
+.selectPriority{
+        width:200px;
+        height:35px;
+    }

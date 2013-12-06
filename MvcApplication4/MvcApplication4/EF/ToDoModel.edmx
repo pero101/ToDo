@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbToDoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ListItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Priority">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Priority" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="EMail" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ListItem_ListItem">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ListItem" Type="Self.ListItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ListItem">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListItem_Priority">
+          <End Role="Priority" Type="Self.Priority" Multiplicity="1" />
+          <End Role="ListItem" Type="Self.ListItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Priority">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ListItem">
+              <PropertyRef Name="Priority" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbToDoModelStoreContainer">
+          <EntitySet Name="ListItem" EntityType="Self.ListItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ListItem_ListItem" Association="Self.FK_ListItem_ListItem">
+            <End Role="User" EntitySet="User" />
+            <End Role="ListItem" EntitySet="ListItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListItem_Priority" Association="Self.FK_ListItem_Priority">
+            <End Role="Priority" EntitySet="Priority" />
+            <End Role="ListItem" EntitySet="ListItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbToDoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ListItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ListItem_ListItem" FromRole="ListItem" ToRole="User" />
+          <NavigationProperty Name="Priority1" Relationship="Self.FK_ListItem_Priority" FromRole="ListItem" ToRole="Priority" />
+        </EntityType>
+        <EntityType Name="Priority">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Priority1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ListItems" Relationship="Self.FK_ListItem_Priority" FromRole="Priority" ToRole="ListItem" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="EMail" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ListItems" Relationship="Self.FK_ListItem_ListItem" FromRole="User" ToRole="ListItem" />
+        </EntityType>
+        <Association Name="FK_ListItem_ListItem">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ListItem" Type="Self.ListItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ListItem">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListItem_Priority">
+          <End Role="Priority" Type="Self.Priority" Multiplicity="1" />
+          <End Role="ListItem" Type="Self.ListItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Priority">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ListItem">
+              <PropertyRef Name="Priority" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbToDoEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ListItems" EntityType="Self.ListItem" />
+          <EntitySet Name="Priorities" EntityType="Self.Priority" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_ListItem_ListItem" Association="Self.FK_ListItem_ListItem">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ListItem" EntitySet="ListItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListItem_Priority" Association="Self.FK_ListItem_Priority">
+            <End Role="Priority" EntitySet="Priorities" />
+            <End Role="ListItem" EntitySet="ListItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbToDoModelStoreContainer" CdmEntityContainer="dbToDoEntities2">
+          <EntitySetMapping Name="ListItems">
+            <EntityTypeMapping TypeName="dbToDoModel.ListItem">
+              <MappingFragment StoreEntitySet="ListItem">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Priorities">
+            <EntityTypeMapping TypeName="dbToDoModel.Priority">
+              <MappingFragment StoreEntitySet="Priority">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Priority1" ColumnName="Priority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="dbToDoModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

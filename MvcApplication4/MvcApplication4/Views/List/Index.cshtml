@@ -1,0 +1,47 @@
+﻿@section header{
+    <link rel="stylesheet" href="/Content/List.css" type="text/css" media="screen" />
+
+    @Scripts.Render("~/Scripts/List.js")
+
+}
+
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Your list</h1>
+            </hgroup>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <section id="ListContainer"></section>
+        <section id="ListAddItem">
+            <h3>Add new item</h3>
+            <br />
+            <label>Text</label>
+            <input type="text" id="tbxAddText" />
+            <br />
+            <select id="selectAddPriority">
+                <option value="1">Low</option>
+                <option value="2">Normal</option>
+                <option value="3">Medium</option>
+                <option value="4">Important</option>
+            </select>
+            <br />
+            <input type="button" value="Add" id="btnAdd" />
+        </section>
+    </section>
+</div>
+
+<script id="ToDoTemplate" type="text/x-jquery-tmpl">
+    <section class="ToDoItem">
+        <p>${text}</p>
+        <select class="selectPriority" id="selectOption${id}">
+            <option value="1" >Low</option>
+            <option value="2" >Normal</option>
+            <option value="3" >Medum</option>
+            <option value="4" >Important</option>
+        </select>
+        <input type="button" value="Delete" alt="${id}" class="deleteBtn" />
+    </section>
+</script>
